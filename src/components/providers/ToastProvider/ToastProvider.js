@@ -31,12 +31,25 @@ function ToastProvider({ children }) {
     }, 400);
   }
 
+  function dismissAllToasts() {
+    const hideAllToastsStack = toastStack.map((toast) => ({
+      ...toast,
+      isHidden: true,
+    }));
+    setToastStack(hideAllToastsStack);
+
+    window.setTimeout(() => {
+      setToastStack([]);
+    }, 400);
+  }
+
   return (
     <ToastContext.Provider
       value={{
         toastStack,
         addToToastStack,
         removeFromToastStack,
+        dismissAllToasts,
       }}
     >
       {children}

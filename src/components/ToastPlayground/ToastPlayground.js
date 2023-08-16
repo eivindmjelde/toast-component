@@ -13,7 +13,6 @@ export const VARIANT_OPTIONS = Object.freeze({
 
 function ToastPlayground() {
   console.log("ToastPlayground rendered");
-
   return (
     <div className={styles.wrapper}>
       <header>
