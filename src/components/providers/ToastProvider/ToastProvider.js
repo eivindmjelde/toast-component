@@ -1,20 +1,10 @@
 import React, { useState, createContext } from "react";
-import { VARIANT_OPTIONS } from "../../ToastPlayground";
 export const ToastContext = createContext();
 
 function ToastProvider({ children }) {
-  const [message, setMessage] = useState("");
-  const [selectedVariant, setSelectedVariant] = useState(
-    VARIANT_OPTIONS.Notice
-  );
   const [toastStack, setToastStack] = useState([]);
 
-  function resetCurrentToastState() {
-    setMessage("");
-    setSelectedVariant(VARIANT_OPTIONS.Notice);
-  }
-
-  function addToToastStack() {
+  function addToToastStack(message, selectedVariant) {
     setToastStack([
       ...toastStack,
       {
@@ -24,29 +14,26 @@ function ToastProvider({ children }) {
         id: window.crypto.randomUUID(),
       },
     ]);
-
-    resetCurrentToastState();
   }
 
   function removeFromToastStack(id) {
-    const modifiedStack = [...toastStack];
-    const index = modifiedStack.findIndex((toast) => toast.id === id);
-    modifiedStack[index].isHidden = true;
-    setToastStack(modifiedStack);
-    const removedStack = [...modifiedStack];
-    removedStack.splice(index, 1);
+    const hiddenToastStack = [...toastStack];
+    const toastToHideIndex = hiddenToastStack.findIndex(
+      (toast) => toast.id === id
+    );
+    hiddenToastStack[toastToHideIndex].isHidden = true;
+    setToastStack(hiddenToastStack);
+
+    const removedToastStack = [...hiddenToastStack];
+    removedToastStack.splice(toastToHideIndex, 1);
     window.setTimeout(() => {
-      setToastStack(removedStack);
+      setToastStack(removedToastStack);
     }, 400);
   }
 
   return (
     <ToastContext.Provider
       value={{
-        message,
-        setMessage,
-        selectedVariant,
-        setSelectedVariant,
         toastStack,
         addToToastStack,
         removeFromToastStack,
