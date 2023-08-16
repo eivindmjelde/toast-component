@@ -4,6 +4,12 @@
   }
 }
 
+@keyframes toastOut {
+  to {
+    transform: translateX(calc(100% + 64px));
+  }
+}
+
 .wrapper {
   position: fixed;
   right: 0;
@@ -18,4 +24,8 @@
 .toastWrapper {
   animation: toast 800ms cubic-bezier(0, 0.46, 0, 1.04) both;
   will-change: transform;
+}
+
+.slideOut {
+  animation-name: toastOut;
 }

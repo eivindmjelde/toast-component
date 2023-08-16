@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { useContext } from "react";
+import clsx from "clsx";
 
-import Toast from '../Toast';
-import styles from './ToastShelf.module.css';
+import Toast from "../Toast";
+import styles from "./ToastShelf.module.css";
+import { ToastContext } from "../providers/ToastProvider";
 
 function ToastShelf() {
+  const { toastStack, removeFromToastStack } = useContext(ToastContext);
+
   return (
     <ol className={styles.wrapper}>
-      <li className={styles.toastWrapper}>
-        <Toast variant="notice">Example notice toast</Toast>
-      </li>
-      <li className={styles.toastWrapper}>
-        <Toast variant="error">Example error toast</Toast>
-      </li>
+      {toastStack.map(({ id, message, variant, isHidden }) => (
+        <li
+          key={id}
+          className={clsx(styles.toastWrapper, isHidden && styles.slideOut)}
+        >
+          <Toast
+            message={message}
+            variant={variant}
+            onDismiss={() => removeFromToastStack(id)}
+          />
+        </li>
+      ))}
     </ol>
   );
 }
