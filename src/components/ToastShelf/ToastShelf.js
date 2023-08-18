@@ -24,7 +24,12 @@ function ToastShelf() {
   }, [dismissAllToasts]);
 
   return (
-    <ol className={styles.wrapper}>
+    <ol
+      className={styles.wrapper}
+      role="region"
+      aria-live="polite"
+      aria-label="Notification"
+    >
       {toastStack.map(({ id, message, variant, isHidden }) => (
         <li
           key={id}
