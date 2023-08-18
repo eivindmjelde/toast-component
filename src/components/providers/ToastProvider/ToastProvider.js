@@ -1,8 +1,12 @@
 import React, { useState, createContext } from "react";
+import { useEscapeKey } from "../../../hooks/useEscapeKey";
+
 export const ToastContext = createContext();
 
 function ToastProvider({ children }) {
   const [toastStack, setToastStack] = useState([]);
+
+  useEscapeKey(dismissAllToasts);
 
   function addToToastStack(message, selectedVariant) {
     setToastStack([

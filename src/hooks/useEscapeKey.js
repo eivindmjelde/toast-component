@@ -14,3 +14,5 @@ export function useEscapeKey(callback) {
     };
   }, [callback]);
 }
+
+export const shit = "shit";
